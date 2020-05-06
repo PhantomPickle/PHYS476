@@ -10,6 +10,8 @@ import torch
 import numpy as np
 import torch.nn.functional as func
 
+torch.cuda.set_device(0)
+
 train_data = np.genfromtxt('mnist_train.csv', delimiter=',')
 test_data = np.genfromtxt('mnist_test.csv', delimiter=',')
 
