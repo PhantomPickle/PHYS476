@@ -29,21 +29,15 @@ ans_data = file['ans']
 # Rearranging image dimensions to be compatible with PyTorch
 img_data = np.moveaxis(img_data, -1, 1)
 
-# Trimming dataset to a more manageable size
-s_img_data = img_data[:200000]
-s_ans_data = ans_data[:200000]
-del img_data
-del ans_data
-
 # Splitting into training and testing sets
 train_frac = .9
-f_index = int(train_frac * len(s_img_data))
-train_in = s_img_data[:f_index]
-train_out = s_ans_data[:f_index]
-test_in = s_img_data[f_index:]
-test_out = s_ans_data[f_index:]
-del s_img_data
-del s_ans_data
+f_index = int(train_frac * len(img_data))
+train_in = img_data[:f_index]
+train_out = ans_data[:f_index]
+test_in = img_data[f_index:]
+test_out = ans_data[f_index:]
+del img_data
+del ans_data
 
 train_in = train_in / 255.
 test_in = test_in / 255.
@@ -138,12 +132,8 @@ for b in range(batches):
         batch_out = test_out[b_start : b_end].to(device)  
         
         test_pred = net(batch_in)
-        #test_loss = loss(test_pred, batch_out)
         test_accs.append(accuracy(test_pred, batch_out).item())
 
 print("Testing accuracy: " + str(sum(test_accs)/batches))
 
-#
-# Do something with the loss!!!
-#
 
