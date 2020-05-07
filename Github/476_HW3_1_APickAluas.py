@@ -30,8 +30,8 @@ ans_data = file['ans']
 img_data = np.moveaxis(img_data, -1, 1)
 
 # Trimming dataset to a more manageable size
-s_img_data = img_data[:50000]
-s_ans_data = ans_data[:50000]
+s_img_data = img_data[:200000]
+s_ans_data = ans_data[:200000]
 del img_data
 del ans_data
 
@@ -57,7 +57,7 @@ test_out = torch.from_numpy(test_out).long()
 # Network hyperparameters
 learn_rate = .001
 b_frac = .05
-epochs = 10
+epochs = 20
 
 batches = int(1/b_frac)
 b_size = int(b_frac*train_in.shape[0])
