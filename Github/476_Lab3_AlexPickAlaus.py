@@ -10,11 +10,16 @@ import torch
 import numpy as np
 import torch.nn.functional as func
 
-train_data = np.genfromtxt('mnist_train.csv', delimiter=',')
-test_data = np.genfromtxt('mnist_test.csv', delimiter=',')
+#torch.cuda.set_device(0)
 
-#train_data = np.load("train_saved.npy")
-#test_data = np.load("test_saved.npy")
+#train_data = np.genfromtxt('mnist_train.csv', delimiter=',')
+#test_data = np.genfromtxt('mnist_test.csv', delimiter=',')
+
+#np.save('train_saved', train_data, allow_pickle=True)
+#np.save('test_saved', test_data, allow_pickle=True)
+
+train_data = np.load("train_saved.npy")
+test_data = np.load("test_saved.npy")
 
 # Splitting training and testing sets into input and output data;
 # Input data mapped from {0-255} to {0-1}
