@@ -147,12 +147,3 @@ print("Testing accuracy: " + str(sum(test_accs)/batches))
 # Do something with the loss!!!
 #
 
-=======
-
-
-file = h5py.File('Galaxy10.h5', 'r')
-ans_data = file['ans']
-img_data = file['images']
-
-print(ans_data.shape)
->>>>>>> fdd4be7e762fe2e260161b3001f03a0a28a8da67
