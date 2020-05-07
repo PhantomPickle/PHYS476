@@ -49,7 +49,7 @@ test_in = torch.from_numpy(np.float32(test_in))
 test_out = torch.from_numpy(test_out).long()
 
 # Network hyperparameters
-learn_rate = .001
+learn_rate = .005
 b_frac = .05
 epochs = 20
 
@@ -82,7 +82,6 @@ class Galaxy_Net(nn.Module):
         x = self.fc2(x)
         return x
 
-
 # Computes accuracy of network outputs (relative to actual labels)
 def accuracy(est_labels, labels):
     max_vals = torch.argmax(est_labels, 1)
@@ -90,8 +89,7 @@ def accuracy(est_labels, labels):
     return acc
 
 # Instantiating the network and defining the optimizer
-net = Galaxy_Net()
-net.to(device)
+net = Galaxy_Net().to(device)
 loss = nn.CrossEntropyLoss()
 opti = opt.Adam(net.parameters(), lr = learn_rate)
 
@@ -131,6 +129,7 @@ for b in range(batches):
         batch_in = test_in[b_start : b_end].to(device)
         batch_out = test_out[b_start : b_end].to(device)  
         
+        # Computes loss and accuracy of network predictions with respect to actual labels
         test_pred = net(batch_in)
         test_accs.append(accuracy(test_pred, batch_out).item())
 
