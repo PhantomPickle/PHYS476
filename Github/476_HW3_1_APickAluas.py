@@ -59,7 +59,7 @@ learn_rate = .001
 b_frac = .05
 epochs = 10
 
-batches = int(1/b_frac).to(device)
+batches = int(1/b_frac)
 b_size = int(b_frac*train_in.shape[0])
 
 # Defines a CNN class inheriting from the Module base class
