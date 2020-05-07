@@ -18,6 +18,9 @@ seed = 7
 np.random.seed(seed)
 torch.manual_seed(seed)
 
+# Designating GPU usage
+device = torch.device("cuda:0")
+
 # Loading dataset
 file = h5py.File('Galaxy10.h5', 'r')
 img_data = file['images']
@@ -56,7 +59,7 @@ learn_rate = .001
 b_frac = .05
 epochs = 10
 
-batches = int(1/b_frac)
+batches = int(1/b_frac).to(device)
 b_size = int(b_frac*train_in.shape[0])
 
 # Defines a CNN class inheriting from the Module base class
@@ -94,6 +97,7 @@ def accuracy(est_labels, labels):
 
 # Instantiating the network and defining the optimizer
 net = Galaxy_Net()
+net.to(device)
 loss = nn.CrossEntropyLoss()
 opti = opt.Adam(net.parameters(), lr = learn_rate)
 
@@ -102,8 +106,8 @@ for e in range(epochs):
     for b in range(batches):
         b_start = b * b_size
         b_end = (b+1) * b_size
-        batch_in = train_in[b_start : b_end]
-        batch_out = train_out[b_start : b_end]
+        batch_in = train_in[b_start : b_end].to(device)
+        batch_out = train_out[b_start : b_end].to(device)
 
         # Zeroes out gradient parameters 
         opti.zero_grad() 
@@ -130,11 +134,11 @@ b_size = int(b_frac*test_in.shape[0])
 for b in range(batches):
         b_start = b * b_size
         b_end = (b+1) * b_size
-        batch_in = test_in[b_start : b_end]
-        batch_out = test_out[b_start : b_end]  
+        batch_in = test_in[b_start : b_end].to(device)
+        batch_out = test_out[b_start : b_end].to(device)  
         
         test_pred = net(batch_in)
-        test_loss = loss(test_pred, batch_out)
+        #test_loss = loss(test_pred, batch_out)
         test_accs.append(accuracy(test_pred, batch_out).item())
 
 print("Testing accuracy: " + str(sum(test_accs)/batches))
