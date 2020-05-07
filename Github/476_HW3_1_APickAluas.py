@@ -11,12 +11,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
-from torch.autograd import Variable
-from torch.utils.data.sampler import SubsetRandomSampler
 import torch.nn.functional as F
 import torch.optim as opt
-import torchvision
-import torchvision.transforms as transforms
 
 seed = 7
 np.random.seed(seed)
@@ -31,8 +27,8 @@ ans_data = file['ans']
 img_data = np.moveaxis(img_data, -1, 1)
 
 # Trimming dataset to a more manageable size
-s_img_data = img_data[:5000]
-s_ans_data = ans_data[:5000]
+s_img_data = img_data[:50000]
+s_ans_data = ans_data[:50000]
 del img_data
 del ans_data
 
@@ -57,7 +53,7 @@ test_out = torch.from_numpy(test_out).long()
 
 # Network hyperparameters
 learn_rate = .001
-b_frac = .01
+b_frac = .05
 epochs = 10
 
 batches = int(1/b_frac)
@@ -69,7 +65,7 @@ class Galaxy_Net(nn.Module):
         super(Galaxy_Net, self).__init__()
         self.c1 = nn.Conv2d(3, 6, 5)
         self.c2 = nn.Conv2d(6, 16, 5)
-        self.c_drop = nn.Dropout2d(.25)
+        self.c_drop = nn.Dropout2d(.4)
         self.pool = nn.MaxPool2d(2,2)
         self.fc1 = nn.Linear(16 * 14 * 14, 100)
         self.fc2 = nn.Linear(100, 10)
