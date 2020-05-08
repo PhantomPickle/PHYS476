@@ -12,15 +12,19 @@ from sklearn import svm, tree, metrics
 data = np.load('adult-data.npy')
 labels = np.load('adult-labels.npy')
 
+# Splitting data into training and testing portions
+# and splitting data into parameters and labels
 i = int(.9*data.shape[0])
 train_data = data[:i]
 train_labels = labels[:i]
 test_data = data[i:]
 test_labels = labels[i:]
 
+# SVM was hitting about 74% accuracy and took over a minute to run
 #svc = svm.SVC(kernel = 'sigmoid', gamma = 'auto').fit(train_data, train_labels)
 #test_pred = svc.predict(test_data)
 
+# Training and testing portion of Decision Tree classifier
 dtc = tree.DecisionTreeClassifier().fit(train_data, train_labels)
 test_pred = dtc.predict(test_data)
 

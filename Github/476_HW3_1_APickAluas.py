@@ -39,6 +39,7 @@ test_out = ans_data[f_index:]
 del img_data
 del ans_data
 
+# Normalizing data
 train_in = train_in / 255.
 test_in = test_in / 255.
 
@@ -121,7 +122,7 @@ for e in range(epochs):
 
 # Testing iteration loop
 test_accs = []
-#batch size recalculated for test data
+# Batch size recalculated for test data
 b_size = int(b_frac*test_in.shape[0])
 for b in range(batches):
         b_start = b * b_size
