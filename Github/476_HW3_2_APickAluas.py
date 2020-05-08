@@ -7,18 +7,21 @@ Created on Thu May  7 04:56:31 2020
 """
 
 import numpy as np
-import matplotlib.pyplot as plt
-import sklearn
-from sklearn import svm
+from sklearn import svm, tree, metrics
 
 data = np.load('adult-data.npy')
 labels = np.load('adult-labels.npy')
 
-#train_data = data[]
+i = int(.9*data.shape[0])
+train_data = data[:i]
+train_labels = labels[:i]
+test_data = data[i:]
+test_labels = labels[i:]
 
-# Defining SVM parameters: C = regularization parameter, 
-C = 1.0
-svc = svm.SVC(kernel = 'linear', C = 1, gamma = 0.5).fit(data, labels)
-#pred = svc.predict()
+#svc = svm.SVC(kernel = 'sigmoid', gamma = 'auto').fit(train_data, train_labels)
+#test_pred = svc.predict(test_data)
 
-print(data.shape)
+dtc = tree.DecisionTreeClassifier().fit(train_data, train_labels)
+test_pred = dtc.predict(test_data)
+
+print("Testing accuracy: " + str(metrics.accuracy_score(test_pred, test_labels)))

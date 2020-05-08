@@ -51,7 +51,7 @@ test_out = torch.from_numpy(test_out).long()
 # Network hyperparameters
 learn_rate = .005
 b_frac = .05
-epochs = 20
+epochs = 30
 
 batches = int(1/b_frac)
 b_size = int(b_frac*train_in.shape[0])
